@@ -2,6 +2,7 @@
 import streamlit as st
 from snowflake.snowpark.functions import col
 
+# Établir la connexion pour Streamlit Cloud
 cnx = st.connection("snowflake")
 session = cnx.session
 
@@ -12,7 +13,7 @@ st.write("Choose the fruits you want in your custom Smoothie")
 name_on_order = st.text_input("Name on Smoothie")
 st.write('The name on your Smoothie will be:', name_on_order)
 
-session = get_active_session()
+# Récupérer les données depuis Snowflake en utilisant la session déjà créée
 my_dataframe = session.table("SMOOTHIES.PUBLIC.FRUIT_OPTIONS").select(col('FRUIT_NAME'))
 
 ingredients_list = st.multiselect(
