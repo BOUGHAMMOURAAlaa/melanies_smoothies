@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.functions import col
+import requests
 
 # Établir la connexion pour Streamlit Cloud
 cnx = st.connection("snowflake")
@@ -13,7 +14,6 @@ st.write("Choose the fruits you want in your custom Smoothie")
 name_on_order = st.text_input("Name on Smoothie")
 st.write('The name on your Smoothie will be:', name_on_order)
 
-# Récupérer les données depuis Snowflake en utilisant la session déjà créée
 my_dataframe = session.table("SMOOTHIES.PUBLIC.FRUIT_OPTIONS").select(col('FRUIT_NAME'))
 
 ingredients_list = st.multiselect(
@@ -37,3 +37,6 @@ if ingredients_list:
     if time_to_insert:
         session.sql(my_insert_stmt).collect()
         st.success(f'Your Smoothie is ordered, {name_on_order}!', icon="✅")
+
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+st.text(smoothiefroot_response)
