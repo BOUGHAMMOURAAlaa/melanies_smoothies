@@ -4,7 +4,7 @@ from snowflake.snowpark.functions import col
 
 # Établir la connexion pour Streamlit Cloud
 cnx = st.connection("snowflake")
-session = cnx.session
+session = cnx.session()
 
 # Write directly to the app
 st.title("Customize Your Smoothie!")
